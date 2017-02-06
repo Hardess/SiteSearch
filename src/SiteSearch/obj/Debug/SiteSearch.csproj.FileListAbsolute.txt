@@ -5,3 +5,8 @@ C:\Users\Admin\AppData\Local\Temporary Projects\SiteSearch\obj\Debug\SiteSearch.
 C:\Users\Admin\AppData\Local\Temporary Projects\SiteSearch\obj\Debug\SiteSearch.pdb
 C:\Users\Admin\Desktop\新建文件夹\SiteSearch\SiteSearch\obj\Debug\SiteSearch.csprojResolveAssemblyReference.cache
 C:\Users\Admin\Desktop\新建文件夹\SiteSearch\SiteSearch\obj\Debug\SiteSearch.dll
+C:\Users\Admin\Desktop\SiteSearch\src\SiteSearch\obj\Debug\SiteSearch.csproj.ResolveComReference.cache
+C:\Users\Admin\Desktop\SiteSearch\src\SiteSearch\obj\Debug\SiteSearch.dll
+C:\Users\Admin\Desktop\SiteSearch\src\SiteSearch\bin\Debug\SiteSearch.dll
+C:\Users\Admin\Desktop\SiteSearch\src\SiteSearch\bin\Debug\SiteSearch.pdb
+C:\Users\Admin\Desktop\SiteSearch\src\SiteSearch\obj\Debug\SiteSearch.pdb
