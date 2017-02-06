@@ -7,8 +7,8 @@ namespace SiteSearch
 {
      class Model
     {
-       internal readonly int Id { get;  }
-       internal readonly string Title { get; }
-       internal readonly string Content { get; }
+         internal readonly int Id { get; set; }
+         internal readonly string Title { get; set; }
+         internal readonly string Content { get; set; }
     }
 }

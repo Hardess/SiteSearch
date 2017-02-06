@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 using NPOI;
+using Word = Microsoft.Office.Interop.Word;
+using System.Web;
 
 namespace SiteSearch
 {
@@ -18,23 +20,24 @@ namespace SiteSearch
         /// </summary>
         /// <param name="FilePath">附件路径</param>
         /// <param name="FileType">附件后缀名</param>
+        /// <param name="Id">关联主键编号</param>
         /// <returns>创建索引时所需要的listmodel</returns>
-        private static List<Model> GetModelListByFileType(string FilePath, string FileType)
+        private static List<Model> GetModelListByFileType(string FilePath, string FileType,int Id)
         {
             List<Model> list = new List<Model>();
             switch (FileType)
             {
                 case ".doc":
                 case ".docx":
-                    list.AddRange(GetWordFile(FilePath));
+                    list.AddRange(GetWordFile(FilePath,Id));
                     break;
                 case ".xls":
                 case ".xlsx":
-                    list.AddRange(GetExcelFile(FilePath));
+                    list.AddRange(GetExcelFile(FilePath,Id));
                     break;
                 case ".rar":
                 case ".zip":
-                    list.AddRange(GetCompressFile(FilePath));
+                    list.AddRange(GetCompressFile(FilePath,Id));
                     break;
                 default:
                     break;
@@ -42,12 +45,12 @@ namespace SiteSearch
             return list;
         }
 
-        private static List<Model> GetCompressFile(string FilePath)
+        private static List<Model> GetCompressFile(string FilePath,int Id)
         {
             //TODO:解压压缩文件并为其中的文件内容生成实体集合
-           return  LoadData(FilePath);
+           return  LoadData(FilePath,Id);
         }
-        private static List<Model> LoadData(string FilePath)
+        private static List<Model> LoadData(string FilePath,int Id)
         {
             List<Model> list = new List<Model>();
             //压缩文件解压后的路径
@@ -83,11 +86,11 @@ namespace SiteSearch
                         {
                             case ".doc":
                             case ".docx":
-                                list.AddRange(GetWordFile(FilePath));
+                                list.AddRange(GetWordFile(FilePath,Id));
                                 break;
                             case ".xls":
                             case ".xlsx":
-                                list.AddRange(GetExcelFile(FilePath));
+                                list.AddRange(GetExcelFile(FilePath,Id));
                                 break;
                             default:
                                 break;
@@ -122,34 +125,58 @@ namespace SiteSearch
             process.WaitForExit();
             process.Close();
         }
-        /// <summary>
-        /// 本机是否安装winrar程序
-        /// </summary>
-        /// <returns></returns>
-        public static string ExistsWinRar()
-        {
-            string result = string.Empty;
+        ///// <summary>
+        ///// 本机是否安装winrar程序
+        ///// </summary>
+        ///// <returns></returns>
+        //public static string ExistsWinRar()
+        //{
+        //    string result = string.Empty;
 
-            string key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\WinRAR.exe";
-            RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(key);
-            if (registryKey != null)
-            {
-                result = registryKey.GetValue("").ToString();
-            }
-            registryKey.Close();
+        //    string key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\WinRAR.exe";
+        //    RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(key);
+        //    if (registryKey != null)
+        //    {
+        //        result = registryKey.GetValue("").ToString();
+        //    }
+        //    registryKey.Close();
 
-            return result;
-        }
-        private static List<Model> GetExcelFile(string FilePath)
+        //    return result;
+        //}
+        private static List<Model> GetExcelFile(string FilePath,int Id)
         {
             //TODO:为Excel文件内容生成实体集合
             throw new NotImplementedException();
         }
 
-        private static List<Model> GetWordFile(string FilePath)
+        private static List<Model> GetWordFile(string FilePath,int Id)
         {
             //TODO:为Word文件内容生成实体集合
-            throw new NotImplementedException();
+            List<Model> list = new List<Model>();
+            try
+            {
+                Word.Application app = new Microsoft.Office.Interop.Word.Application();
+                Word.Document doc = null;
+                object unknow = Type.Missing;
+                app.Visible = true;
+                string str = HttpContext.Current.Server.MapPath(FilePath);
+                object file = str;
+                doc = app.Documents.OpenNoRepairDialog(ref file,
+                    ref unknow, ref unknow, ref unknow, ref unknow,
+                    ref unknow, ref unknow, ref unknow, ref unknow,
+                    ref unknow, ref unknow, ref unknow, ref unknow,
+                    ref unknow, ref unknow, ref unknow);
+                string temp = doc.Content.ToString();
+                Model dto = new Model();
+                dto.Id = Id;
+                dto.Content = temp;
+                dto.Title = new FileInfo(FilePath).Name;
+                list.Add(dto);
+            }
+            catch (Exception ex)
+            { 
+            }
+            return list;
         }
     }
 }
