@@ -20,6 +20,15 @@ namespace SiteSearch
         /// <param name="DocumentModel">传入model类型(Id<int>,Title<string>,Content<string>)的list</param>
         public static void CreateIndexByData(string indexPath,List<Model> DocumentModel)
         {
+            #region 解决并发问题的示例方法
+            //if (DocumentModel != null && DocumentModel.Count > 0)
+            //{
+            //    foreach (Model dto in DocumentModel)
+            //    {
+            //        IndexManager.Index.Mod(dto);
+            //    }
+            //}
+            #endregion
             FSDirectory directory = FSDirectory.Open(new DirectoryInfo(indexPath), new NativeFSLockFactory());
             //IndexReader:对索引库进行读取的类
             bool isExist = IndexReader.IndexExists(directory); //是否存在索引库文件夹以及索引库特征文件
