@@ -18,7 +18,7 @@ namespace SiteSearch
         /// </summary>
         /// <param name="indexPath">索引库存储地址（地址为固定的，更改会影响搜索）</param>
         /// <param name="DocumentModel">传入model类型(Id<int>,Title<string>,Content<string>)的list</param>
-        private void CreateIndexByData(string indexPath,List<Model> DocumentModel)
+        public static void CreateIndexByData(string indexPath,List<Model> DocumentModel)
         {
             FSDirectory directory = FSDirectory.Open(new DirectoryInfo(indexPath), new NativeFSLockFactory());
             //IndexReader:对索引库进行读取的类

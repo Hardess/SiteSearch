@@ -21,7 +21,7 @@ namespace SiteSearch
         /// <param name="FileType">附件后缀名</param>
         /// <param name="Id">关联主键编号</param>
         /// <returns>创建索引时所需要的listmodel</returns>
-        private static List<Model> GetModelListByFileType(string FilePath, string FileType,int Id)
+        public static List<Model> GetModelListByFileType(string FilePath, string FileType,int Id)
         {
             List<Model> list = new List<Model>();
             switch (FileType)
@@ -44,12 +44,12 @@ namespace SiteSearch
             return list;
         }
 
-        private static List<Model> GetCompressFile(string FilePath,int Id)
+        public static List<Model> GetCompressFile(string FilePath, int Id)
         {
             //TODO:解压压缩文件并为其中的文件内容生成实体集合
            return  LoadData(FilePath,Id);
         }
-        private static List<Model> LoadData(string FilePath,int Id)
+        public static List<Model> LoadData(string FilePath, int Id)
         {
             List<Model> list = new List<Model>();
             //压缩文件解压后的路径
@@ -142,13 +142,13 @@ namespace SiteSearch
 
         //    return result;
         //}
-        private static List<Model> GetExcelFile(string FilePath,int Id)
+        public static List<Model> GetExcelFile(string FilePath, int Id)
         {
             //TODO:为Excel文件内容生成实体集合
             throw new NotImplementedException();
         }
 
-        private static List<Model> GetWordFile(string FilePath,int Id)
+        public static List<Model> GetWordFile(string FilePath, int Id)
         {
             //TODO:为Word文件内容生成实体集合
             List<Model> list = new List<Model>();

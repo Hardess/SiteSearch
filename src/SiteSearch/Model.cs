@@ -5,10 +5,10 @@ using System.Text;
 
 namespace SiteSearch
 {
-     class Model
+    public class Model
     {
-         internal  int Id { get; set; }
-         internal  string Title { get; set; }
-         internal  string Content { get; set; }
+         public  int Id { get; set; }
+         public string Title { get; set; }
+         public string Content { get; set; }
     }
 }
