@@ -2,4 +2,37 @@
     ViewBag.Title = "AddData";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@model SiteSearch.Model
+<script type="text/javascript">
+    var Id = $("#Id").val();
+    var Title = $("#Title").val();
+    var Content = $("#Content").val();
+    var FilePath = $("#FilePath").val();
+    $("#submit").click(function () {
+        $.ajax({
+            url: "Home/Index",
+            type: "POST",
+            data: { ID: Id, Title: Title, Content: Content, FilePath: FilePath },
+            dataType: JSON,
+        })
+    })
+</script>
+<style type="text/css">
+    div {
+        padding-bottom: 20px;
+    }
+</style>
+<div>
+    @Html.HiddenFor(p => Model.Id)
+</div>
+<div>
+    标题：
+    @Html.TextBoxFor(p => Model.Title)
+</div>
+<div>
+    内容：
+    @Html.TextAreaFor(p => Model.Content)
+</div>
+<div>
+    <input id="submit" type="button" value="提交" />
+</div>

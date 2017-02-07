@@ -30,8 +30,15 @@ namespace TestWeb.Controllers
                     System.IO.Directory.CreateDirectory(IndexPath);//不存在就创建目录 
                 }
                 string FilePath = Request.QueryString["Path"];
-                FileInfo F = new FileInfo(FilePath);
                 List<Model> list = new List<Model>();
+                int ID = 0;
+                int.TryParse(Request.QueryString["Id"], out ID);
+                Model dto = new Model();
+                dto.Id = ID;
+                dto.Title = Request.QueryString["Title"];
+                dto.Content = Request.QueryString["Content"];
+                list.Add(dto);
+                FileInfo F = new FileInfo(FilePath);
                 list.AddRange(FileTools.GetModelListByFileType(FilePath, F.Extension, 1));
                 CreateIndex.CreateIndexByData(IndexPath, list);
                 ViewBag.msg = "创建索引库成功";
