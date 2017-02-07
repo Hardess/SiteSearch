@@ -1,6 +1,11 @@
 ﻿@{
     ViewBag.Title = "SearchIndex";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<SiteSearch.Model> list=ViewData["key"] as List<SiteSearch.Model>;   
 }
-
-<h2>SearchIndex</h2>
+@foreach (SiteSearch.Model dto in list)
+{ 
+    <h3>@Html.LabelFor(p => dto.Id);</h3>
+    <h3>@Html.LabelFor(p=>dto.Title)</h3>
+    <h5>@Html.LabelFor(p=>dto.Content)</h5>
+}

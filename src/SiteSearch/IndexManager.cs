@@ -75,7 +75,7 @@ namespace SiteSearch
                 }
                 else
                 {
-                    Thread.Sleep(3000);
+                    Thread.Sleep(5000);
                 }
             }
         }

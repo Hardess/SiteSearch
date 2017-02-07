@@ -16,21 +16,36 @@ namespace TestWeb.Controllers
     {
         //
         // GET: /Home/
-        static string IndexPath=@"D:\Index"; 
+        static string IndexPath = @"D:\Index";
+        public ActionResult AddData()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
-            if (!System.IO.Directory.Exists(IndexPath))
+            try
             {
-                System.IO.Directory.CreateDirectory(IndexPath);//不存在就创建目录 
+                if (!System.IO.Directory.Exists(IndexPath))
+                {
+                    System.IO.Directory.CreateDirectory(IndexPath);//不存在就创建目录 
+                }
+                string FilePath = Request.QueryString["Path"];
+                FileInfo F = new FileInfo(FilePath);
+                List<Model> list = new List<Model>();
+                list.AddRange(FileTools.GetModelListByFileType(FilePath, F.Extension, 1));
+                CreateIndex.CreateIndexByData(IndexPath, list);
+                ViewBag.msg = "创建索引库成功";
             }
-            string FilePath = Request.QueryString["Path"];
-            FileInfo F = new FileInfo(FilePath);
-            CreateIndex.CreateIndexByData(IndexPath, FileTools.GetModelListByFileType(FilePath, F.Extension, 1));
+            catch (Exception)
+            {
+                ViewBag.msg = "创建索引库失败";
+            }
             return View();
         }
         public ActionResult SearchIndex()
         {
             List<Model> result = new List<Model>(SiteSearch.SearchIndex.QueryIndex(IndexPath, Request.QueryString["SearchKey"]));
+            ViewData.Add("key", result);
             return View();
         }
 
